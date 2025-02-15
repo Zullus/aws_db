@@ -11,3 +11,5 @@ Cada diretório tem o "**readme.md**" para a execução correta.
 ## Atenção
 
 Eu falhei no Kotlin e no Lua, se souber resolver o problema, fique à vontade para mandar um PR.
+
+Mas lembre-se, seja simples!
