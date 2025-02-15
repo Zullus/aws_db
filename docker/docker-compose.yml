@@ -1,0 +1,45 @@
+services:
+    db:
+      container_name: db
+      image: mysql:8.0
+      restart: always
+      ports:
+        - "3306:3306"
+      environment:
+        MYSQL_ROOT_PASSWORD: "root"
+        MYSQL_ROOT_HOST: "%"
+      volumes:
+        - ./config/my.cnf:/etc/mysql/conf.d/my.cnf
+        - ./data:/var/lib/mysql
+        - "./start.sql:/docker-entrypoint-initdb.d/start.sql"
+        - ./logs/mysql:/var/log/mysql
+      networks: 
+        - awsdb
+    
+    awsdbadmin:
+      container_name: awsdbadmin
+      image: phpmyadmin/phpmyadmin:latest
+      restart: always
+      ports:
+        - "8081:80"
+      links:
+        - db
+      volumes:
+        - ./logs:/var/log/apache2/
+      environment:
+        - VIRTUAL_HOST=awsdb.admin,www.awsdb.admin,awsdbadmin.vm,www.awsdbadmin.vm
+        - PMA_ARBITRARY=1
+        - UPLOAD_LIMIT=64M
+        - PMA_HOST=db
+      depends_on:
+        - db
+      networks:
+        - awsdb
+networks:
+  awsdb:  
+    driver: bridge
+  
+volumes:
+  vhostd:
+  html:
+  

@@ -1,0 +1,10 @@
+data/
+*.java
+main
+main.o
+node_modules/
+vendor/
+.dart_tool/
+Debug/
+*.jar
+logs/
